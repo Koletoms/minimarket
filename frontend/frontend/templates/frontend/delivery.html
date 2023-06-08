@@ -1,0 +1,68 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">Доставка
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="/">Главная</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>Доставка</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="Section Section_column Section_columnLeft Section_columnWide">
+      <div class="wrap">
+        <div class="Section-column">
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_advantage">
+              <div class="media-image"><img src="{% static 'frontend/assets/img/icons/advantages/shipping.svg' %}" alt="shipping.svg"/>
+              </div>
+              <div class="media-content">
+                <strong class="media-title">Экспресс доставка</strong>
+                <p class="media-text">Стоимость 500 рублей
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_advantage">
+              <div class="media-image"><img src="{% static 'frontend/assets/img/icons/advantages/quality.svg' %}" alt="quality.svg"/>
+              </div>
+              <div class="media-content">
+                <strong class="media-title">Обычная доставка</strong>
+                <p class="media-text">Бесплатная от 2000 рублей
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="Section-content">
+          <article class="Article">
+            <div class="Article-section">
+              <div class="row row_verticalCenter row_maxHalf">
+                <div class="row-block">
+                  <h2>Почему наша доставка самая лучшая?
+                  </h2>
+                  <p>Отдаем курьеру и дальше на все воля божья.
+                  </p>
+                </div>
+                <div class="row-block">
+                  <div class="pict"><img src="{% static 'frontend/assets/img/content/home/slider.png' %}" alt="slider.png"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

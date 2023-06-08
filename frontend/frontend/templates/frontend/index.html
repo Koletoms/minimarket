@@ -1,0 +1,114 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="Middle">
+  <div class="Section">
+    <div class="wrap">
+      <div class="BannersHome">
+
+        <!-- Получаем баннеры -->
+        <a v-for="(banner, index) in banners"
+             :key="index"
+             class="BannersHomeBlock"
+             :href="banner.href">
+          <div class="BannersHomeBlock-row">
+            <div class="BannersHomeBlock-block">
+              <strong class="BannersHomeBlock-title">${ banner.title }$
+              </strong>
+              <div class="BannersHomeBlock-content">От &#32;<span class="BannersHomeBlock-price">$ ${ banner.price }$</span>
+              </div>
+            </div>
+            <div class="BannersHomeBlock-block" >
+              <div class="BannersHomeBlock-img"><img :src="banner.image" :alt="banner.title"/>
+              </div>
+            </div>
+          </div>
+        </a>
+        <!-- Получаем баннеры -->
+
+      </div>
+    </div>
+  </div>
+  <div class="Section Section_column Section_columnDesktop"  >
+    <div class="wrap">
+      <div class="Section-content">
+        <header class="Section-header">
+          <h2 class="Section-title">Хит продаж
+          </h2>
+        </header>
+        <div class="Cards">
+
+          <!-- Получаем популярные товары -->
+          <div v-for="card in popularCards" class="Card">
+            <a class="Card-picture" :href="card.href">
+              <img v-if="card.images.length > 0" :src="card.images[0].image" :alt="card.title"/></a>
+            <div class="Card-content">
+              <strong class="Card-title"><a :href="card.href">${ card.title }$</a></strong>
+              <div class="Card-description">
+                <div class="Card-cost">
+                  <span class="Card-price">$${ card.price }$</span>
+                </div>
+                <div class="Card-hover">
+                  <button class="Card-btn" @click="addToBasket(card.id)">
+                      <img src="/static/frontend/assets/img/icons/card/cart.svg" alt="cart.svg"/>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /Получаем популярные товары -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="Section Section_column Section_columnRight">
+    <div class="wrap">
+      <div class="Section-column">
+        <div class="Section-columnSection Section-columnSection_mark">
+          <div class="media media_advantage">
+            <div class="media-image"><img src="{% static 'frontend/assets/img/icons/advantages/shipping.svg' %}" alt="shipping.svg"/>
+            </div>
+            <div class="media-content">
+              <strong class="media-title">Доставка
+              </strong>
+              <p class="media-text">Тогда, когда удобно
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="Section-columnSection Section-columnSection_mark">
+          <div class="media media_advantage">
+            <div class="media-image"><img src="{% static 'frontend/assets/img/icons/advantages/moneyBack.svg' %}" alt="moneyBack.svg"/>
+            </div>
+            <div class="media-content">
+              <strong class="media-title">Только тру ориджнал
+              </strong>
+              <p class="media-text">Оригинальных китайких производителей
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="Section-columnSection Section-columnSection_mark">
+          <div class="media media_advantage">
+            <div class="media-image">
+              <img src="{% static 'frontend/assets/img/icons/advantages/quality.svg' %}" alt="quality.svg"/>
+            </div>
+            <div class="media-content">
+              <strong class="media-title">Нас рекомендуют
+              </strong>
+              <p class="media-text">Все кому ни попадя
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block mixins %}
+<script src="{% static 'frontend/assets/js/index.js' %}"></script>
+{% endblock %}
