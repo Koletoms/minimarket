@@ -16,18 +16,7 @@ class UserLoginView(LoginView):
     template_name = 'user_app/login.html'
     next_page = '/'
 
-    # def post(self, request, *args, **kwargs):
-    #
-    #     basket_products = BasketProduct.objects.filter(session_key=request.session.session_key)
-    #
-    #     response = super().post(request, *args, **kwargs)
-    #     new_session_key = request.session.session_key
-    #     for basket_product in basket_products:
-    #         basket_product.session_key = new_session_key
-    #         basket_product.save()
-    #     return response
-
-    def post(self, request, *args, **kwargs):
+    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         """
         Авторизация пользователя вместе с обновление корзины.
         """
@@ -54,7 +43,11 @@ class SingUpView(View):
         return render(request, "user_app/signup.html", context)
 
     def post(self, request: HttpRequest) -> HttpResponse:
+        """
+
+        """
         form = SignUpForm(request.POST)
+        old_session_key = request.session.session_key
         if form.is_valid():
             user = form.save()
             phone_number = form.cleaned_data.get('phone_number')
@@ -67,5 +60,7 @@ class SingUpView(View):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
+            new_session_key = request.session.session_key
+            update_basket_past_login(old_session_key, new_session_key, request.user)
             user.groups.add(Group.objects.get(name='clients'))
             return redirect('/')
