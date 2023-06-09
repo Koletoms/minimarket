@@ -36,7 +36,7 @@ var mix = {
                 )
                 .then(() => {
                     alert('Заказ подтвержден')
-                    location.replace(`/payment/${id}`) // Добавлено id заказа для привязки оплаты к заказу
+                    location.replace(`/payment/${id}`)
                 })
                 .catch(() => {
                     console.warn('Ошибка при подтверждения заказа')
@@ -51,7 +51,6 @@ var mix = {
             else {
                 this.order.deliveryPrice = price_delivery
             }
-            console.log("1", this.order.deliveryPrice)
         }
 
 

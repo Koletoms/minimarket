@@ -1,7 +1,6 @@
-from django.contrib.sessions.models import Session
 from rest_framework import serializers
 
-from shop_app.models import Product
+from shop_app.models import Product, Image
 from .models import Order, OrderProduct, Delivery
 
 
@@ -12,10 +11,15 @@ class DeliverySerializer(serializers.ModelSerializer):
         exclude = ["available"]
 
 
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ["image"]
+
+
 class OrderProductSerializer(serializers.ModelSerializer):
     id = serializers.CharField(read_only=True)
     product_id = serializers.CharField(source="product.id", max_length=100)
-
     category = serializers.CharField(source="product.subcategory.id", max_length=100, read_only=True)
     date = serializers.DateTimeField(read_only=True)
     title = serializers.CharField(source="product", read_only=True)
@@ -25,20 +29,16 @@ class OrderProductSerializer(serializers.ModelSerializer):
     reviews = serializers.IntegerField(source="product.get_count_reviews", read_only=True)
     rating = serializers.FloatField(source="product.get_rating", read_only=True)
     href = serializers.SerializerMethodField(read_only=True)
-    images = serializers.SerializerMethodField(read_only=True)
+    images = ImageSerializer(source="product.images", many=True, required=False, read_only=True)
 
     class Meta:
         model = OrderProduct
         fields = ["category", "id", "product_id", "fixed_price", "quantity", "date", "title", "description",
                   "rating", "freeDelivery", "images", "tags", "href", "reviews"]
 
-    def get_images(self, order_product):
+    def get_href(self, order_product):
         request = self.context.get("request")
-        return [request.build_absolute_uri(image.image.url) for image in order_product.product.images.all()]
-
-    def get_href(self, product):
-        request = self.context.get("request")
-        return request.build_absolute_uri(f"/product/{product.pk}")
+        return request.build_absolute_uri(f"/product/{order_product.product.id}")
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -71,7 +71,6 @@ class OrderSerializer(serializers.ModelSerializer):
             email=user.email
         )
         for product in products:
-            print(product)
             OrderProduct.objects.create(
                 order=order,
                 product_id=product["product"]["id"],

@@ -84,19 +84,17 @@
                     </label>
                   </div>
                 </div>
-
-             </div>
-
+              </div>
               <div class="form-group">
                 <label class="form-label" for="city">
                   Город
                 </label>
-                <input class="form-input" v-model="order.city" id="city" name="city" type="text"/>
+                <input class="form-input" v-model="order.city" id="city" name="city" type="text" data-validate="require"/>
               </div>
               <div class="form-group">
                 <label class="form-label" for="address">Адрес
                 </label>
-                <textarea class="form-textarea" v-model="order.address" name="address" id="address"></textarea>
+                <textarea class="form-textarea" v-model="order.address" name="address" id="address" data-validate="require"></textarea>
               </div>
               <div class="Order-footer"><a class="btn btn_success Order-next" href="#step3">Дальше</a>
               </div>
@@ -109,12 +107,12 @@
               <div class="form-group">
                 <div>
                   <label class="toggle">
-                    <input type="radio" v-model="order.paymentType" name="pay" value="online" checked="checked" /><span class="toggle-box"></span><span class="toggle-text">Онлайн картой</span>
+                    <input type="radio" v-model="order.paymentType" name="pay" value="online" checked="checked" /><span class="toggle-box"></span><span class="toggle-text">Онлайн</span>
                   </label>
                 </div>
                 <div>
                   <label class="toggle">
-                    <input type="radio" v-model="order.paymentType" name="pay" value="someone"/><span class="toggle-box"></span><span class="toggle-text">Онлайн со случайного чужого счета</span>
+                    <input type="radio" v-model="order.paymentType" name="pay" value="someone"/><span class="toggle-box"></span><span class="toggle-text">При получении</span>
                   </label>
                 </div>
               </div>
@@ -185,16 +183,16 @@
                     <div class="Cart-block Cart-block_row">
                       <div class="Cart-block Cart-block_pict">
                         <a class="Cart-pict" :href="product.href">
-                          <img class="Cart-img" :src="product.images.length ? product.images[0] : ''" alt="product.title"/>
+                          <img class="Cart-img" :src="product.images[0].image : ''" alt="product.title"/>
                         </a>
                       </div>
                       <div class="Cart-block Cart-block_info">
-                        <a class="Cart-title" href="#">${ product.title }$</a>
+                        <a class="Cart-title" :href="product.href">${ product.title }$</a>
                         <div class="Cart-desc">${ product.description }$</div>
                       </div>
                     </div>
                     <div class="Cart-block Cart-block_price">
-                      <div class="Cart-price">${ product.price }$$
+                      <div class="Cart-price">${ product.fixed_price }$$
                       </div>
                     </div>
                     <div class="Cart-block Cart-block_row">
@@ -217,23 +215,21 @@
 {#                  </div>#}
 
               </div>
-
-                  <div class="Cart-total">
-                    <div class="Cart-block Cart-block_total">
-                      <strong class="Cart-title">Доставка: ${order.deliveryPrice}$$</strong>
-                    </div>
-                  </div>
-                  <div class="Cart-total">
-                    <div class="Cart-block Cart-block_total">
-                      <strong class="Cart-title">Итого:</strong>
-                      <span class="Cart-price">${ Number(order.totalCost) + Number(order.deliveryPrice) }$$</span>
-                    </div>
-                    <div class="Cart-block">
-                      <button class="btn btn_primary btn_lg" type="submit">Оплатить
-                      </button>
-                    </div>
-                  </div>
+              <div class="Cart-total">
+                <div class="Cart-block Cart-block_total">
+                    <strong class="Cart-title">Доставка: ${order.deliveryPrice}$$</strong>
                 </div>
+                </div>
+                <div class="Cart-total">
+                  <div class="Cart-block Cart-block_total">
+                    <strong class="Cart-title">Итого:</strong>
+                    <span class="Cart-price">${ Number(order.totalCost) + Number(order.deliveryPrice) }$$</span>
+                  </div>
+                    <div class="Cart-block">
+                      <button class="btn btn_primary btn_lg" type="submit">Оплатить</button>
+                    </div>
+                </div>
+            </div>
           </form>
          {% else %}
         <div class="row-block">

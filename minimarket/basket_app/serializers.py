@@ -15,7 +15,7 @@ class ProductInBasketSerializer(serializers.ModelSerializer):
     title = serializers.CharField(source="product.title", max_length=100, read_only=True)
     description = serializers.CharField(source="product.description", max_length=400, read_only=True)
     href = serializers.SerializerMethodField()
-    images = ImageSerializer(source="product.images", many=True)
+    images = ImageSerializer(source="product.images", many=True, required=False)
 
     class Meta:
         model = BasketProduct

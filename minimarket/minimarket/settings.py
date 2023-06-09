@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-jvn-pi=iij=miu6(w*+b8xk_hxs$0%^owhewsi(&m$*lpho96r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['koletoms.pythonanywhere.com/']
 
 
 # Application definition
@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'sale_app.apps.SaleAppConfig',
     'payment_app.apps.PaymentAppConfig',
     'order_app.apps.OrderAppConfig',
-    'administration_app.apps.AdministrationAppConfig',
 
     'rest_framework',
     'django_filters'
@@ -127,8 +126,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
+PROJECT_ROOT = os.path.normpath(os.path.dirname(__file__))
 
-STATIC_URL = 'static/'
+STATIC_DIR = os.path.join(PROJECT_ROOT, 'static')
+STATIC_URL = '/static/'
 
 
 MEDIA_DIR = os.path.join(BASE_DIR, 'files')  # Создаем путь

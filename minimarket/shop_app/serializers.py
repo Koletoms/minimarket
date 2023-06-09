@@ -73,14 +73,16 @@ class ProductSerializer(serializers.ModelSerializer):
     fullDescription = serializers.CharField(source="description", max_length=100)
     freeDelivery = serializers.BooleanField(source="free_delivery")
     reviews = ReviewSerializer(many=True)
-    href = serializers.SerializerMethodField(read_only=True)
+    href = serializers.SerializerMethodField()
     specifications = SpecificationSerializer(many=True)
-    tags = serializers.StringRelatedField(many=True, read_only=True)
-    rating = serializers.FloatField(source="get_rating", read_only=True)
+    tags = serializers.StringRelatedField(many=True)
+    rating = serializers.FloatField(source="get_rating")
 
     class Meta:
         model = Product
         fields = ["id", "category", "price", "available_quantity", "date", "href", "title", "description",
+                  "fullDescription", "freeDelivery", "images", "reviews", "specifications", "rating", "tags"]
+        read_only = ["id", "category", "price", "available_quantity", "date", "href", "title", "description",
                   "fullDescription", "freeDelivery", "images", "reviews", "specifications", "rating", "tags"]
         depth = 1
 

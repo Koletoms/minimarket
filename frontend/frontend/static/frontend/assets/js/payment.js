@@ -17,6 +17,7 @@ var mix = {
             )
             .then(() => {
                 alert('Успешная оплата')
+                // location.replace(`/order/${paymentId}`)
                 this.number = ''
                 this.name = ''
                 this.year = ''
@@ -24,6 +25,7 @@ var mix = {
                 this.code = ''
             })
             .catch(() => {
+                alert('Оплата не прошла')
                 console.warn('Ошибка при оплате')
             })
         }
