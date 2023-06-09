@@ -183,7 +183,7 @@
                     <div class="Cart-block Cart-block_row">
                       <div class="Cart-block Cart-block_pict">
                         <a class="Cart-pict" :href="product.href">
-                          <img class="Cart-img" :src="product.images[0].image : ''" alt="product.title"/>
+                          <img class="Cart-img" :src="product.images[0].image" alt="product.title"/>
                         </a>
                       </div>
                       <div class="Cart-block Cart-block_info">
@@ -192,7 +192,7 @@
                       </div>
                     </div>
                     <div class="Cart-block Cart-block_price">
-                      <div class="Cart-price">${ product.fixed_price }$$
+                      <div class="Cart-price">${ product.fixed_price }$$/шт.
                       </div>
                     </div>
                     <div class="Cart-block Cart-block_row">
@@ -203,16 +203,6 @@
                   </div>
                   <!-- Товар на оплату -->
                   <!--Назначаем стоимость доставки-->
-{#                  <div v-for="delivery in allDelivery">#}
-{#                    <div v-if="delivery.delivery_type === order.deliveryType">#}
-{#                      <div v-if="order.totalCost > delivery.limit">#}
-{#                        <div v-model="order.deliveryPrice" v-bind:value="delivery.price_delivery"></div>#}
-{#                      </div>#}
-{#                      <div v-else>#}
-{#                        <div v-model="order.deliveryPrice" v-bind:value="delivery.above_price_limit"></div>#}
-{#                      </div>#}
-{#                    </div>#}
-{#                  </div>#}
 
               </div>
               <div class="Cart-total">
@@ -231,18 +221,19 @@
                 </div>
             </div>
           </form>
-         {% else %}
+        {% else %}
+
         <div class="row-block">
           <form action="/user/login/?next={{request.get_full_path}}" method="post">
             {% csrf_token %}
-{#            <div class="form-group">#}
-{#              <label class="form-label" for="login">Логин</label>#}
-{#              <input class="form-input" id="login" name="login" type="text" placeholder="Login"/>#}
-{#            </div>#}
-{#            <div class="form-group">#}
-{#              <label class="form-label" for="password">Пароль</label>#}
-{#              <input class="form-input" id="password" name="password" type="password" placeholder="Password"/>#}
-{#            </div>#}
+            <div class="form-group">
+              <label class="form-label" for="login">Логин</label>
+              <input class="form-input" id="login" name="login" type="text" placeholder="Login"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="password">Пароль</label>
+              <input class="form-input" id="password" name="password" type="password" placeholder="Password"/>
+            </div>
             <div class="form-group">
               <button class="btn btn_muted Order-btnReg" type="submit">Авторизация</button>
             </div>

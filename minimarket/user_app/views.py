@@ -5,46 +5,45 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 
-from basket_app.models import BasketProduct
 from .forms import SignUpForm
 from .models import Profile
+from .services import update_basket_past_login
 
 User = get_user_model()
 
 
 class UserLoginView(LoginView):
-    """
-    Преставление для залогинивания пользователя.
-    """
     template_name = 'user_app/login.html'
     next_page = '/'
 
+    # def post(self, request, *args, **kwargs):
+    #
+    #     basket_products = BasketProduct.objects.filter(session_key=request.session.session_key)
+    #
+    #     response = super().post(request, *args, **kwargs)
+    #     new_session_key = request.session.session_key
+    #     for basket_product in basket_products:
+    #         basket_product.session_key = new_session_key
+    #         basket_product.save()
+    #     return response
+
     def post(self, request, *args, **kwargs):
-        basket_products = BasketProduct.objects.filter(session_key=request.session.session_key)
+        """
+        Авторизация пользователя вместе с обновление корзины.
+        """
+        old_session_key = request.session.session_key
         response = super().post(request, *args, **kwargs)
         new_session_key = request.session.session_key
-        for basket_product in basket_products:
-            basket_product.session_key = new_session_key
-            basket_product.save()
+        update_basket_past_login(old_session_key, new_session_key, request.user)
         return response
 
 
 class UserLogoutView(LogoutView):
-    """
-    Преставление для разлогинивания пользователя.
-    """
     template_name = 'user_app/logout.html'
     next_page = '/'
 
-    # def get(self, request, *args, **kwargs):
-    #     logger.info(f"Пользователь {request.user.username} разлогинился")
-    #     return super().get(request, *args, **kwargs)
-
 
 class SingUpView(View):
-    """
-    Преставление для регистрации пользователя.
-    """
     next_page = '/'
 
     def get(self, request: HttpRequest) -> HttpResponse:
@@ -68,7 +67,5 @@ class SingUpView(View):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
-            # logger.info(f"Пользователь {username} прошел регистрацию.")
-
             user.groups.add(Group.objects.get(name='clients'))
             return redirect('/')

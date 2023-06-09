@@ -71,8 +71,8 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -132,8 +132,8 @@ STATIC_DIR = os.path.join(PROJECT_ROOT, 'static')
 STATIC_URL = '/static/'
 
 
-MEDIA_DIR = os.path.join(BASE_DIR, 'files')  # Создаем путь
-MEDIA_ROOT = MEDIA_DIR  # Где лежит папка с медиа
+MEDIA_DIR = os.path.join(BASE_DIR, 'files')
+MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/files/'
 
 # Default primary key field type
@@ -147,7 +147,6 @@ REST_FRAMEWORK = {
     # 'PAGE_SIZE': 2,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ]
 }

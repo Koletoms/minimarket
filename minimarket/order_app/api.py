@@ -1,3 +1,5 @@
+from django.contrib.auth import logout
+from django.contrib.auth.models import AnonymousUser
 from django.db.models import QuerySet
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
@@ -29,7 +31,6 @@ class OrderActiveViewSet(ModelViewSet):
     """
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    pagination_class = None
 
     def retrieve(self, request, *args, **kwargs):
         instance = Order.objects.filter(user=self.request.user).first()
@@ -43,7 +44,6 @@ class OrderViewSet(ModelViewSet):
     """
     permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
-    pagination_class = None
 
     def get_queryset(self) -> QuerySet[Order]:
         """
@@ -52,8 +52,4 @@ class OrderViewSet(ModelViewSet):
         return Order.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-    def perform_update(self, serializer):
-        serializer.save()
-        # self.request.session.cycle_key()
+        serializer.save(user=self.request.user, session_key=self.request.session.session_key)

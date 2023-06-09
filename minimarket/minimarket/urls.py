@@ -51,7 +51,6 @@ urlpatterns = [
     path('api/payment/<int:pk>', PaymentViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('api/basket/', ProductInBasketViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('api/basket/<int:pk>', ProductInBasketViewSet.as_view({'delete': 'destroy', 'put': 'update'})),
-    path('api/products/limited/', ProductPopularViewSet.as_view({'get': 'list'})),
     path('api/products/popular/', ProductLimitedViewSet.as_view({'get': 'list'})),
     path('api/products/<int:pk>', ProductViewSet.as_view({'get': 'retrieve'})),
     path('api/products/<int:pk>/review/', ReviewViewSet.as_view({'post': 'create'}))

@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from shop_app.models import Product, Image
 from .models import Order, OrderProduct, Delivery
+from basket_app.models import BasketProduct
 
 
 class DeliverySerializer(serializers.ModelSerializer):
@@ -64,6 +65,7 @@ class OrderSerializer(serializers.ModelSerializer):
         """
         products = validated_data.pop('order_products')
         user = validated_data.pop('user')
+        session_key = validated_data.pop('session_key')
         order = Order.objects.create(
             fullName=user.username,
             user=user,
@@ -77,6 +79,12 @@ class OrderSerializer(serializers.ModelSerializer):
                 fixed_price=product["fixed_price"],
                 quantity=product["quantity"]
             )
+
+        last_cart = BasketProduct.objects.filter(session_key=session_key)
+        if last_cart.exists():
+            for cart_product in last_cart:
+                cart_product.ordered = True
+                cart_product.save()
         return order
 
     def update(self, instance, validated_data):

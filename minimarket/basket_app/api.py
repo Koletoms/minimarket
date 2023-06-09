@@ -14,7 +14,7 @@ class ProductInBasketViewSet(ModelViewSet):
         """
         Получаем список добавленных товаров в корзину.
         """
-        return BasketProduct.objects.filter(session_key=self.request.session.session_key)
+        return BasketProduct.objects.filter(session_key=self.request.session.session_key, ordered=False)
 
     def list(self, request, *args, **kwargs):
         """

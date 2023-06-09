@@ -94,7 +94,7 @@ class Order(models.Model):
         return f'Заказ #{self.id}'
 
     def get_total_cost(self):
-        return round((sum(item.fixed_price for item in self.order_products.all()) + self.delivery_price), 1)
+        return round((sum(item.fixed_price * item.quantity for item in self.order_products.all())), 1)
 
 
 class OrderProduct(models.Model):
